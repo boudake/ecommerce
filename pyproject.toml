@@ -1,2 +1,9 @@
+[project]
+name = "ecommerce-analytics"
+version = "0.1.0"
+dependencies = [
+    "pyyaml",
+]
+
 [project.optional-dependencies]
-dev = ["pytest", "pyyaml"]
+dev = ["pytest"]
