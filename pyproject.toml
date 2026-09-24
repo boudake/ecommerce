@@ -1,4 +1,2 @@
-# pyproject.toml (justement !) — à la racine
-[tool.pytest.ini_options]
-pythonpath = ["."]
-testpaths = ["tests"]
+[project.optional-dependencies]
+dev = ["pytest", "pyyaml"]
