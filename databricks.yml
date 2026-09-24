@@ -1,0 +1,26 @@
+bundle:
+  name: ecommerce-data-platform
+
+include:
+  - resources/*.yml
+
+variables:
+
+  environment:
+    default: dev
+
+targets:
+
+  dev:
+    mode: development
+
+    default: true
+
+    workspace:
+      host: ${var.databricks_host}
+
+  prod:
+    mode: production
+
+    workspace:
+      host: ${var.databricks_host}

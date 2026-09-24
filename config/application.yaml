@@ -1,0 +1,107 @@
+app:
+  name: ecommerce-data-platform
+  environment: ${APP_ENV:local}
+
+
+common:
+
+  ingestion:
+    file_format: csv
+    header: true
+    infer_column_types: true
+    available_now: true
+
+
+local:
+
+  spark:
+    master: local[*]
+    app_name: ecommerce-local
+
+  paths:
+    landing: ./data/landing
+    bronze: ./data/bronze
+    silver: ./data/silver
+    gold: ./data/gold
+    checkpoints: ./data/checkpoints
+    schemas: ./data/schemas
+
+  database:
+    bronze: ecommerce_bronze
+    silver: ecommerce_silver
+    gold: ecommerce_gold
+
+
+databricks:
+
+  spark:
+    app_name: ecommerce-databricks
+
+  catalog: ecommerce
+
+  paths:
+    landing: /Volumes/ecommerce/raw
+    bronze: /Volumes/ecommerce/bronze
+    silver: /Volumes/ecommerce/silver
+    gold: /Volumes/ecommerce/gold
+    checkpoints: /Volumes/ecommerce/checkpoints
+    schemas: /Volumes/ecommerce/schemas
+
+  database:
+    bronze: bronze
+    silver: silver
+    gold: gold
+
+
+datasets:
+
+  customers:
+
+    local:
+      source: ${local.paths.landing}/customers
+      target: ${local.paths.bronze}/customers
+
+    databricks:
+      source: ${databricks.paths.landing}/customers
+      target: ${databricks.catalog}.${databricks.database.bronze}.customers
+      schema_location: ${databricks.paths.schemas}/customers
+      checkpoint_location: ${databricks.paths.checkpoints}/customers
+
+
+  products:
+
+    local:
+      source: ${local.paths.landing}/products
+      target: ${local.paths.bronze}/products
+
+    databricks:
+      source: ${databricks.paths.landing}/products
+      target: ${databricks.catalog}.${databricks.database.bronze}.products
+      schema_location: ${databricks.paths.schemas}/products
+      checkpoint_location: ${databricks.paths.checkpoints}/products
+
+
+  category:
+
+    local:
+      source: ${local.paths.landing}/category
+      target: ${local.paths.bronze}/category
+
+    databricks:
+      source: ${databricks.paths.landing}/category
+      target: ${databricks.catalog}.${databricks.database.bronze}.category
+      schema_location: ${databricks.paths.schemas}/category
+      checkpoint_location: ${databricks.paths.checkpoints}/category
+
+
+  orders:
+
+    local:
+      source: ${local.paths.landing}/orders
+      target: ${local.paths.bronze}/orders
+
+    databricks:
+      source: ${databricks.paths.landing}/orders
+      target: ${databricks.catalog}.${databricks.database.bronze}.orders
+      schema_location: ${databricks.paths.schemas}/orders
+      checkpoint_location: ${databricks.paths.checkpoints}/orders

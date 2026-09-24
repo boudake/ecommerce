@@ -1,0 +1,10 @@
+data/bronze/
+data/silver/
+data/gold/
+data/checkpoints/
+data/schemas/
+
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
